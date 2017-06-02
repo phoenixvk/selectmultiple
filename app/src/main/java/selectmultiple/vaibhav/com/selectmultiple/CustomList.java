@@ -33,10 +33,6 @@ public class CustomList extends ArrayAdapter<String> {
         ImageView imageView = (ImageView) rowView.findViewById(R.id.img);
         txtTitle.setText(web[position]);
         Picasso.with(context).load(new File(ParentFolder+"/"+web[position])).placeholder(R.drawable.document).resize(50, 50).into(imageView);
-       if(txtTitle.getText().toString().equals(""))
-       {
-           rowView.setVisibility(View.GONE);
-       }
 
         return rowView;
     }

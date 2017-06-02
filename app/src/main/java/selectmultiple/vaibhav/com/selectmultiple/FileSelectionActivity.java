@@ -188,7 +188,7 @@ public class FileSelectionActivity extends Activity {
             finish();
         }
         Log.d(TAG, "Files: "+resultFileList.toString());
-        Intent result = this.getIntent();
+        Intent result = new Intent();
         result.putExtra(FILES_TO_UPLOAD, resultFileList);
         setResult(Activity.RESULT_OK, result);
         finish();
@@ -243,8 +243,11 @@ public class FileSelectionActivity extends Activity {
         fileList = new ArrayList<File>();
         fileNames = new ArrayList<String>();
         for(File file : tempFileList){
-            fileList.add(file);
-            fileNames.add(file.getName());
+            if(file.getName().contains(".pdf"))
+            {
+                fileList.add(file);
+                fileNames.add(file.getName());
+            }
         }
 
 
@@ -296,6 +299,8 @@ public class FileSelectionActivity extends Activity {
         adap.addAdapter(adapter1);
         adap.addAdapter(adapter2);
 
+        Log.d("adapter1 count",adapter1.getCount()+"");
+        Log.d("adapter2 count",adapter2.getCount()+"");
 
         directoryView.setAdapter(adap);
     }

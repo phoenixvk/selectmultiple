@@ -4,17 +4,22 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
 import java.security.Permission;
+import java.util.ArrayList;
 import java.util.jar.Manifest;
 
 import static java.security.AccessController.getContext;
 
 public class MainActivity extends AppCompatActivity {
 
+    TextView textView ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,11 +41,31 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(getApplicationContext(),FileSelectionActivity.class);
-                    startActivity(intent);
+                    startActivityForResult(intent,101);
                 }
             });
 
         }
+
+        textView = (TextView)findViewById(R.id.textView);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==101)
+        {
+            Object files =  data.getStringArrayListExtra("upload");
+
+            ArrayList<File> fileArrayList = (ArrayList<File>) files;
+            String s= "\n";
+            for (int i = 0 ; i <fileArrayList.size();i++)
+            {
+
+                s =  s +fileArrayList.get(i).getName()+"\n";
+
+            }
+            textView.setText("Selected files :--->"+""+s);
+        }
+    }
 }
